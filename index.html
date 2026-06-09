@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MindArc Flashcard Quiz</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            <i class="fa-solid fa-brain"></i>
+        </div>
+
+        <div>
+            <h2>MindArc</h2>
+            <span>FLASHCARD SYSTEM</span>
+        </div>
+
+    </div>
+
+    <ul class="nav-menu">
+
+        <li class="active"
+        onclick="showSection('overview')">
+            <i class="fa-solid fa-chart-column"></i>
+            Overview
+        </li>
+
+        <li onclick="showSection('study')">
+            <i class="fa-solid fa-book-open"></i>
+            Study Cards
+        </li>
+
+        <li onclick="showSection('quiz')">
+            <i class="fa-solid fa-graduation-cap"></i>
+            Quiz Arena
+        </li>
+
+        <li onclick="showSection('manage')">
+            <i class="fa-solid fa-gear"></i>
+            Manage Deck
+        </li>
+
+    </ul>
+
+    <button class="reset-btn"
+    onclick="resetDeck()">
+        <i class="fa-solid fa-rotate-left"></i>
+        Deck Reset
+    </button>
+
+</nav>
+
+<div class="container">
+
+<!-- ================================= -->
+<!-- OVERVIEW -->
+<!-- ================================= -->
+
+<section id="overview"
+class="section active-section">
+
+    <div class="hero-grid">
+
+        <div class="hero-card">
+
+            <h1>
+                Elevate Your Intellect
+            </h1>
+
+            <p>
+                Study with adaptive flashcards,
+                strengthen memory retention,
+                and verify your mastery through
+                interactive quizzes and analytics.
+            </p>
+
+            <div class="hero-buttons">
+
+                <button
+                onclick="showSection('study')">
+                    Study Cards
+                </button>
+
+                <button
+                onclick="showSection('quiz')">
+                    Start Quiz
+                </button>
+
+            </div>
+
+        </div>
+
+        <div class="streak-card">
+
+            <div class="streak-header">
+
+                <h3>Study Streak</h3>
+
+                <i class="fa-solid fa-fire"></i>
+
+            </div>
+
+            <h1 id="streakCount">1</h1>
+
+            <p>
+                Consecutive Days
+            </p>
+
+            <small>
+                Keep studying daily
+            </small>
+
+        </div>
+
+    </div>
+
+    <!-- STATS -->
+
+    <h2 class="section-title">
+        Core Performance Indicators
+    </h2>
+
+    <div class="stats-grid">
+
+        <div class="stat-card">
+            <h4>Total Deck Size</h4>
+            <h1 id="totalCards">0</h1>
+        </div>
+
+        <div class="stat-card">
+            <h4>Cards Studied</h4>
+            <h1 id="cardsStudied">0</h1>
+        </div>
+
+        <div class="stat-card">
+            <h4>Correct Answers</h4>
+            <h1 id="correctAnswers">0</h1>
+        </div>
+
+        <div class="stat-card">
+            <h4>Incorrect Answers</h4>
+            <h1 id="wrongAnswers">0</h1>
+        </div>
+
+        <div class="stat-card">
+            <h4>Accuracy</h4>
+            <h1 id="accuracy">0%</h1>
+        </div>
+
+    </div>
+
+    <!-- ANALYTICS -->
+
+    <div class="analytics-section">
+
+        <div>
+
+            <h2 class="section-title">
+                Category Analytics
+            </h2>
+
+            <div
+            id="categoryContainer"
+            class="category-grid">
+            </div>
+
+        </div>
+
+        <div>
+
+            <h2 class="section-title">
+                Recent Activity
+            </h2>
+
+            <div
+            id="recentActivity"
+            class="activity-card">
+
+                No activity yet.
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ================================= -->
+<!-- STUDY CARDS -->
+<!-- ================================= -->
+
+<section id="study"
+class="section">
+
+    <div class="study-header">
+
+        <h3>
+            Select Study Category
+        </h3>
+
+        <div class="filter-buttons">
+
+            <button
+            onclick="filterCards('All')">
+                All
+            </button>
+
+            <button
+            onclick="filterCards('Programming')">
+                Programming
+            </button>
+
+            <button
+            onclick="filterCards('AI/ML')">
+                AI/ML
+            </button>
+
+            <button
+            onclick="filterCards('DSA')">
+                DSA
+            </button>
+
+            <button
+            onclick="filterCards('General Knowledge')">
+                General Knowledge
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="card-count">
+
+        Card
+        <span id="cardNumber">1</span>
+
+        of
+
+        <span id="cardTotal">1</span>
+
+    </div>
+
+    <div class="study-card">
+
+        <div class="study-top">
+
+            <div>
+
+                <span
+                id="categoryBadge"
+                class="badge">
+
+                    Programming
+
+                </span>
+
+                <span
+                class="difficulty">
+
+                    Easy
+
+                </span>
+
+            </div>
+
+            <button
+            class="favorite-btn">
+
+                <i class="fa-regular fa-star"></i>
+
+            </button>
+
+        </div>
+
+        <div class="question-label">
+
+            QUESTION
+
+        </div>
+
+        <div
+        id="cardQuestion"
+        class="question-text">
+
+            Loading...
+
+        </div>
+
+        <div
+        id="cardAnswer"
+        class="answer-text">
+        </div>
+
+        <div class="study-bottom">
+
+            <button
+            onclick="showAnswer()">
+
+                Show Answer
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="navigation">
+
+        <button
+        onclick="previousCard()">
+
+            Previous
+
+        </button>
+
+        <div
+        id="dots"
+        class="dots">
+        </div>
+
+        <button
+        onclick="nextCard()">
+
+            Next
+
+        </button>
+
+    </div>
+
+</section>
+
+<!-- ================================= -->
+<!-- QUIZ ARENA -->
+<!-- ================================= -->
+
+<section id="quiz"
+class="section">
+
+    <div class="quiz-card">
+
+        <h2>
+            Quiz Arena
+        </h2>
+
+        <div
+        id="quizQuestion"
+        class="quiz-question">
+
+            Loading...
+
+        </div>
+
+        <input
+        type="text"
+        id="quizAnswer"
+        placeholder="Enter Answer">
+
+        <button
+        onclick="checkQuizAnswer()">
+
+            Submit Answer
+
+        </button>
+
+        <div class="score-box">
+
+            Score :
+            <span id="quizScore">
+                0
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ================================= -->
+<!-- MANAGE DECK -->
+<!-- ================================= -->
+
+<section id="manage"
+class="section">
+
+    <div class="manage-card">
+
+        <h2>
+            Manage Flashcards
+        </h2>
+
+        <input
+        type="text"
+        id="newQuestion"
+        placeholder="Enter Question">
+
+        <input
+        type="text"
+        id="newAnswer"
+        placeholder="Enter Answer">
+
+        <select
+        id="newCategory">
+
+            <option>
+                Programming
+            </option>
+
+            <option>
+                AI/ML
+            </option>
+
+            <option>
+                DSA
+            </option>
+
+            <option>
+                General Knowledge
+            </option>
+
+        </select>
+
+        <button
+        onclick="addFlashcard()">
+
+            Add Flashcard
+
+        </button>
+
+    </div>
+
+    <div
+    id="flashcardList"
+    class="flashcard-list">
+    </div>
+
+</section>
+
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>
